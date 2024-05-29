@@ -1,0 +1,49 @@
+<?php
+#!/usr/bin/env php
+include './vendor/autoload.php';
+
+use Src\Bot;
+use Src\CommandFactory\LockAddMember;
+use Src\CommandFactory\LongPolling;
+use Src\CommandFactory\ModelMaker;
+
+
+$event=$argv[1];
+$moduleName=isset($argv[2]) ? $argv[2] : false;
+$option=isset($argv[3]) ? $argv[3] : false;
+
+if($event=='make:module'){
+    if(empty($moduleName)){
+        die('Enter module name : php artisan make:module moduleName');
+    }else{
+        file_put_contents("app/Modules/$moduleName.php",'<?php
+
+namespace App\Modules;
+
+class '.$moduleName.' {
+
+    public static function run(){
+        return new '.$moduleName.';
+    }
+    
+}');
+    echo "Your module created successfully\n";
+    }
+}elseif($event=='set:webhook'){
+    print(Bot::setWebhook()."\n");
+}elseif($event=='delete:webhook'){
+    print(Bot::deleteWebhook()."\n");
+}elseif($event=='make:model'){
+    print(ModelMaker::create($moduleName));
+}elseif($event=='install:lock_add_member'){
+    print(LockAddMember::install());
+}elseif($event=='run:bot' && $moduleName=='--long-polling'){
+
+    print("Bot is running ...");
+    print(LongPolling::run());
+
+}elseif($event=='serve'){
+
+    $host=str_replace(['http://','https'],['',''],config()['host']);
+    shell_exec("php -S $host");
+}

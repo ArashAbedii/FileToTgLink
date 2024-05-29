@@ -1,0 +1,24 @@
+{
+    "name": "arashabedii/telebot",
+    "type": "project",
+    "description": "The TeleBot Framework",
+    "keywords": ["framework", "telebot"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/database":"8.*",
+        "arashabedii/requester": "^1.4"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "App\\":"app",
+            "Src\\":"src",
+            "Database\\":"database"
+        },
+        "files": ["src/Helpers/functions.php","src/Helpers/prevars.php"]
+    },
+
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
