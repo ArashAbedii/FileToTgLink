@@ -47,11 +47,19 @@ class CallbackQueryHandler {
             );
 
             if($ok){
+                
 
-                $action=Action::where('user_id',UserModule::user()->id)->where('label','lock_channel')->where('status','pending')->first();
+                $action=Action::where('user_id',UserModule::user()->id)->where('action_label','lock_channel')->where('status','pending')->first();
                 
                 if($action){
+                   
                     //sendMedias();
+                    $hashId=extractDlLink($action->action_command);
+
+                   
+
+
+                    return LinkModule::run()->sendFiles($hashId);
                 }
             }
 

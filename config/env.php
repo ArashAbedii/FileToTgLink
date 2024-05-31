@@ -1,6 +1,6 @@
 <?php
 
-$host='http://localhost:8005'; //PUT YOUR IP OR DOMAIN ADDRESS HERE. EXAMPLE: http://192.168.1.15
+$host='http://localhost:9080/FileToTgLink'; //PUT YOUR IP OR DOMAIN ADDRESS HERE. EXAMPLE: http://192.168.1.15
 $botUrl=$host.''; //PUT BOT ROOT PATH HERE. EXAMPLE: $botUrl=$host.'/TeleBotDir';
 
 
@@ -15,8 +15,8 @@ return [
     'DB_CONNECTION'=>'mysql', //or sqlite
     'DB_HOST'=>'localhost',
     'DB_NAME'=>'file_to_tg_link', //database name
-    'DB_USERNAME'=>'root', //database username
-    'DB_PASSWORD'=>'', //database password
+    'DB_USERNAME'=>'spdmanhub', //database username
+    'DB_PASSWORD'=>'Z:7{zd3}_Q&XbhT}$', //database password
     'DB_CHARSET'=>'utf8mb4',
     'DB_COLLATION'=>'utf8mb4_unicode_ci',
     'APP_BASE_PATH'=>dirname(__DIR__),
@@ -24,6 +24,6 @@ return [
         '530351595'
     ],
     'hash_pattern'=>'ABCDacbdEeFGfgHIJKkijhLmnNMLOoPQqpRsSRTtUwvVWZXzx',
-    'BOT_USERNAME'=>'XSpider2rayBot'
+    'BOT_USERNAME'=>'PubXDownloaderBot'
 ];
 
