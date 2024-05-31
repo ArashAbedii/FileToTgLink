@@ -6,7 +6,7 @@ $botUrl=$host.''; //PUT BOT ROOT PATH HERE. EXAMPLE: $botUrl=$host.'/TeleBotDir'
 
 return [
     'debug'=>false,
-    'token'=>'6747104891:AAEkPktZMe1MYmaBAEaxcSyT1iJhKBoKTHA', //PUT YOUR BOT TOKEN HERE
+    'token'=>'6484787569:AAHU6iTel3Vgeejn6siLQdluClpcjXarqu0', //PUT YOUR BOT TOKEN HERE
     'ADMIN_CHAT_ID'=>'530351595', //PUT YOUR CHAT_ID HERE
     'host'=>$host,
     'bot_url'=>$botUrl,
