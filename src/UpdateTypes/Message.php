@@ -87,27 +87,27 @@ class Message extends Update {
     }
 
     public function getAudio(){
-        return $this->{$this->gettype()}->audio;
+        return @$this->{$this->gettype()}->audio;
     }
 
     public function getDocument(){
-        return $this->{$this->gettype()}->document;
+        return @$this->{$this->gettype()}->document;
     }
 
     public function getPhoto(){
-        return $this->{$this->gettype()}->photo;
+        return @$this->{$this->gettype()}->photo;
     }
 
     public function getSticker(){
-        return $this->{$this->gettype()}->sticker;
+        return @$this->{$this->gettype()}->sticker;
     }
 
     public function getVideo(){
-        return $this->{$this->gettype()}->video;
+        return @$this->{$this->gettype()}->video;
     }
 
     public function getVideoNote(){
-        return $this->{$this->gettype()}->video_note;
+        return @$this->{$this->gettype()}->video_note;
     }
 
     public function getVoice(){

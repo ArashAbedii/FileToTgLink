@@ -305,9 +305,13 @@ class Bot {
 
     //create telegram request
     public static function sendRequest($method,array $params=[]){
+
+
+
         $token=config()['token'];
         $reqUrl="https://api.telegram.org/bot$token/$method";
-        return Request::send($reqUrl,$params,'post')->body;
+
+        return Request::send($reqUrl,$params,'post',[],true)->body;
     }
 
 }

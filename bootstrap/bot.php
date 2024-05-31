@@ -3,27 +3,34 @@
 //BOOTSTRAP
 require_once "../vendor/autoload.php";
 
+use App\Modules\Setting;
 use App\Modules\UserModule;
 use Src\Bot;
 use Src\DBHandler;
 use Src\Helpers\Utilities;
 
+if(config()['debug']){
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+
 //bot starter
 $bot=new Bot();
 DBHandler::setup(true);
 
-// $coreSettings=Setting::find(1);
-$coreSettings=1;
+$botSettings=Setting::botSettings();
 
 //handle user permissions
 $currentUser=UserModule::authHandler();
+
 
 if(empty($currentUser->status) || $currentUser->status!='actived'){
     exit();
 }
 
 //lock channel
-// Utilities::lock_on_channels(['-1001151835046'],message()->getFrom()->id,'join to channel');
+Utilities::lock_on_channels(Setting::getChannels(),message()->getFrom()->id,$botSettings->lock_channel_msg);
 
 //lock add memeber
 // $count_added_memeber=Utilities::getCountAddedMemeber(message()->getFrom()->id);

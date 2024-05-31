@@ -1,8 +1,13 @@
 <?php
 
 namespace Src\Helpers;
+
+use App\Models\Action;
+use App\Models\User;
+use App\Modules\UserModule;
 use Illuminate\Database\Capsule\Manager as DB;
 use Src\DBHandler;
+use Src\InlineKeyboardMarkup;
 
 class Utilities{
 
@@ -22,28 +27,59 @@ class Utilities{
         return $inlineButtons;
     }
 
-    public static function lock_on_channels(array $chat_ids,$user_id,$message){
-        $error=false;
+    public static function lock_on_channels(array $channels,$user_id,$message){
+
+
+        $notJoinedChannels=[];
+
         
-        foreach($chat_ids as $chat_id){
-           
-            $response=json_decode(bot()->getChatMember(['chat_id'=>$chat_id,'user_id'=>$user_id]));
+        
+        foreach($channels as $channel){
+
+            $response=json_decode(bot()->getChatMember(['chat_id'=>$channel->chat_id,'user_id'=>$user_id]));
 
             if($response->ok==false){
                 bot()->sendMessage(['chat_id'=>$user_id,'text'=>'chat not found','reply_to_message_id'=>message()->getMessageId()]);
                 return false;
-            }if($response->ok && $response->result->status=='left'){
-                $error=true;
+            }elseif($response->ok && $response->result->status=='left'){
+                $notJoinedChannels[]=[
+                    [
+                        'text'=>$channel->text,
+                        'url'=>$channel->link
+                    ]
+                ];
             }
         }
 
-        if($error===false){
+        //dd($notJoinedChannels);
+
+        if(empty($notJoinedChannels)){
             return true;
         }
 
-        bot()->sendMessage(['chat_id'=>$user_id,'text'=>$message,'reply_to_message_id'=>message()->getMessageId()]);
+        $notJoinedChannels[]=[
+            [
+                'text'=>'تایید عضویت ✅',
+                'callback_data'=>'check_channel_join'
+            ]
+        ];
 
-        return false;
+        //store action here
+        if(!empty(message()->getText()) && isDlLink(message()->getText())){
+            
+            $check=Action::where('user_id',UserModule::user()->id)->where('action_label','lock_channel')->first();
+
+            if(empty($check)){
+                Action::create(['user_id'=>UserModule::user()->id,'action_command'=>message()->getText(),'action_label'=>'lock_channel']);
+            }else{
+                $check->update(['user_id'=>UserModule::user()->id,'action_command'=>message()->getText(),'action_label'=>'lock_channel']);
+            }
+        }
+
+
+        bot()->sendMessage(['chat_id'=>$user_id,'text'=>$message,'reply_to_message_id'=>message()->getMessageId(),'reply_markup'=>InlineKeyboardMarkup::create($notJoinedChannels)]);
+
+        exit();
     }
 
 

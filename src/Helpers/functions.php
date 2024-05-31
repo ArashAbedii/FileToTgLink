@@ -12,6 +12,7 @@ use App\Controllers\MyChatMemberHandler;
 use App\Controllers\PollAnswerHandler;
 use App\Controllers\PollHandler;
 use App\Controllers\ShippingQueryHandler;
+use App\Modules\Setting;
 use ArashAbedii\Server;
 use Src\Media\Audio;
 use Src\UpdateTypes\CallbackQuery;
@@ -290,12 +291,84 @@ function settings(){
 }
 
 function my_chat_member(){
+
     global $myMemberChatObjHandler;
 
     if($myMemberChatObjHandler instanceof MyChatMember){
-        $myMemberChatObjHandler;
+        return $myMemberChatObjHandler;
     }else{
         $myMemberChatObjHandler=new MyChatMember;
         return $myMemberChatObjHandler;
     }
+}
+
+
+function dd($value){
+    print_r($value);
+    exit();
+}
+
+function isDlLink($text){
+    
+    $check=extractDlLink($text);
+    
+    if($check){
+        return true;
+    }
+
+    return false;
+}
+
+function extractDlLink($text){
+
+    preg_match("/\/start dl_([a-zA-Z]{6,12})/",$text,$matches);
+    
+    if(empty($matches)){
+        return false;
+    }
+
+    return $matches[1];
+}
+
+function isAdmin(){
+
+    if(in_array(chat()->getChatId(),Setting::getAdminsChatIdList())){
+        return true;
+    }
+
+    return false;
+}
+
+
+function isFile(){
+    if(
+        !empty(message()->getAudio()) ||
+        !empty(message()->getVideo()) ||
+        !empty(message()->getDocument()) ||
+        !empty(message()->getVideoNote())
+    ){
+        return true;
+    }
+
+    return false;
+}
+
+function getFileFromMessage(){
+    if(!empty(message()->getDocument())){
+        return message()->getDocument();
+    }elseif(!empty(message()->getVideo())){
+        return message()->getVideo();
+    }elseif(!empty(message()->getAudio())){
+        return message()->getAudio();
+    }elseif(!empty(message()->getPhoto())){
+        return message()->getPhoto();
+    }elseif(!empty(message()->getVideoNote())){
+        return message()->getVideoNote();
+    }else{
+        return false;
+    }
+}
+
+function getLink($process){
+    return 'https://t.me/'.config()['BOT_USERNAME'].'?start=dl_'.$process->hash_id;
 }

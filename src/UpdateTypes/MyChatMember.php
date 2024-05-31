@@ -18,6 +18,7 @@ class MyChatMember extends Update {
     }
 
     public function getNewChatMember(){
-        return $this->{$this->gettype()}->new_chat_member;
+ 
+        return !empty($this->{$this->gettype()}->new_chat_member) ? $this->{$this->gettype()}->new_chat_member : null ;
     }
 }

@@ -30,7 +30,8 @@ class UserModule {
                     'firstname'=>self::from()->first_name,
                     'lastname'=>!empty(self::from()->last_name) ? self::from()->last_name : null,
                     'username'=>!empty(self::from()->username) ? self::from()->username : null,
-                    'chat_id'=>self::from()->id
+                    'chat_id'=>self::from()->id,
+                    'status'=>'actived'
                 ];
 
                 return User::create($form);
@@ -45,6 +46,7 @@ class UserModule {
         }
 
         if(!empty(my_chat_member()->getNewChatMember())){
+            
             $st=my_chat_member()->getNewChatMember()->status;
 
             if(!empty($st)){
@@ -58,7 +60,7 @@ class UserModule {
             }
         }
         
-        $form['status']='active';
+        $form['status']='actived';
 
         $user->update($form);
 

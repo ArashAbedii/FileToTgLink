@@ -9,6 +9,20 @@ class User extends Model {
         'username',
         'first_name',
         'last_name',
-        'status'
+        'status',
+        'chat_id'
     ];
+
+    public function action(){
+        return $this->hasMany(Action::class,'user_id');
+    }
+
+    public function links(){
+        return $this->hasMany(Link::class,'user_id');
+    }
+
+    public function latestCreateLinkProcess(){
+        return $this->links()->latest()->first();
+    }
+    
 }

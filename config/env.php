@@ -5,6 +5,7 @@ $botUrl=$host.''; //PUT BOT ROOT PATH HERE. EXAMPLE: $botUrl=$host.'/TeleBotDir'
 
 
 return [
+    'debug'=>false,
     'token'=>'6747104891:AAEkPktZMe1MYmaBAEaxcSyT1iJhKBoKTHA', //PUT YOUR BOT TOKEN HERE
     'ADMIN_CHAT_ID'=>'530351595', //PUT YOUR CHAT_ID HERE
     'host'=>$host,
@@ -16,12 +17,13 @@ return [
     'DB_NAME'=>'file_to_tg_link', //database name
     'DB_USERNAME'=>'root', //database username
     'DB_PASSWORD'=>'', //database password
-    'DB_CHARSET'=>'utf8',
-    'DB_COLLATION'=>'utf8_unicode_ci',
+    'DB_CHARSET'=>'utf8mb4',
+    'DB_COLLATION'=>'utf8mb4_unicode_ci',
     'APP_BASE_PATH'=>dirname(__DIR__),
     'ADMINS'=>[
         '530351595'
     ],
-    'STORAGE_CHANNEL'=>''
+    'hash_pattern'=>'ABCDacbdEeFGfgHIJKkijhLmnNMLOoPQqpRsSRTtUwvVWZXzx',
+    'BOT_USERNAME'=>'XSpider2rayBot'
 ];
 
